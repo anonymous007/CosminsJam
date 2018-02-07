@@ -1,10 +1,6 @@
 #include <iostream>
-#include <vector>
-#include <stdlib.h>
 #include <stdio.h>
-
 using namespace std;
-
 
 struct node{
     unsigned int value;
@@ -14,57 +10,45 @@ struct node{
 
 struct node* bTree;
 struct node* root=bTree;
-struct node* newNode(unsigned int value)
+struct node* newNode(unsigned int val)
 {
-    struct node *result=NULL;
-    result=new(node);
-    result->value=value;
-    result->left=NULL;
-    result->right=NULL;
-    return result;
+    struct node* k=new(struct node);
+    k->value=val;
+    k->left=NULL;
+    k->right=NULL;
+    return k;
 }
 
-void insertNewNode(unsigned int value)
+void printBtree(struct node* i)
 {
-    if(root==NULL)
-    {
-        root=newNode(value);
-        return;
-    }
-    if(root->value > value)
-    {
-        root=root->left;
-        insertNewNode(value);
-    }else{
-        root=root->right;
-        insertNewNode(value);
-    }
+    if(i->left!=NULL)printBtree(i->left);
+    
+    if(i->right!=NULL)printBtree(i->right);
+    
+    if(i!=NULL)cout<<i->value<<'\n';
 }
 
-void printBinaryTree(node* b)
-{
-    struct node* i=b;
-    if(i->value>=0&&i!=NULL){
-        cout<<i->value<<"\n";
-        printBinaryTree(i->left);
-        printBinaryTree(i->right);
-    }
+bool findValue(unsigned int val, struct node* i){
+    struct node* p=i;
+    if(p==NULL)
+        return 0;
+    if(p->value==val)
+    return 1;
+    else if(p->value > val)
+        findValue(val, p->left);
+    else
+        findValue(val, p->right);
 }
 
-void initTree(node* root)
-{
-    if(root==NULL)
-    {
-        root=new node;
-        root->value=0;
-        root->left=NULL;
-        root->right=NULL;
-    }
-}
+
 void deleteTree(struct node* i)
 {
-    if(i->left!=NULL)deleteTree(i->left);
-    if(i->right!=NULL)deleteTree(i->right);
+    if(i->left!=NULL)
+        deleteTree(i->left);
+    
+    if(i->right!=NULL)
+        deleteTree(i->right);
+
     if(i!=NULL)
     {
         delete(i);
@@ -72,17 +56,19 @@ void deleteTree(struct node* i)
     }
 }
 
-
 int main()
 {
-    root=newNode(60);
+    root=newNode(90);
     root->left=newNode(20);
-    root->right=newNode(62120);
-    root->left->right=newNode(25);
-    root->left->left=newNode(13);
+    root->right=newNode(95);
+    root->left->right=newNode(53);
+    root->left->left=newNode(19);
+    root->right->left=newNode(92);
+    root->right->right=newNode(101);
 
-    printBinaryTree(root);
-    deleteTree(root);
-
+    printf("Value %d %s", 92, findValue(92,root)==1?"Has been found!\n":"Has not been found!\n");
+    printf("Value %d %s", 93, findValue(93,root)==1?"Has been found!\n":"Has not been found!\n");
+    
+    printBtree(root);
     return 0;
 }

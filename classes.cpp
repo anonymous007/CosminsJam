@@ -48,7 +48,7 @@ class serialCode{
     public: char regionInitials[2];
             std::string number;
 
-    std::string getNumber(serialCode *x)
+    static std::string getNumber(serialCode *x)
     {
         return x->number;
     }
@@ -274,11 +274,15 @@ int main()
     std::vector<kid> kidsArray;
     std::vector<adult> adultArray;
 
-    std::vector<serialCode>serialArray;
+    std::vector<serialCode>serialArray(10);
     for(unsigned int i=0;i<10;++i)
     {
         serialCode *x=new serialCode;
-        serialArray[i].push_back(*x);
+        serialArray.push_back(*x);
+        std::string k=serialCode::getNumber(&serialArray[i]);
+        std::cout<<k<<'\n';
+        std::cout<<serialArray[i].regionInitials<<'\n';
+        // delete(x);
     }
     
     return 0;

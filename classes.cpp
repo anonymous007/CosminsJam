@@ -312,11 +312,16 @@ int main()
 	printf("Declare a group of Persons (13)members\n");
 	std::vector<person> groupOfPersons(3);
 	groupOfPersons[0] = person();//declared a person with default values
-
+	const char* someSecrets[]{
+		(const char*)"I hope I get to work as a software engineer @ Electronic Arts",
+		(const char*)"I love everything related to computer science",
+		(const char*)"Sometimes I relax playing Dota2",
+		(const char*)NULL
+	};
 	groupOfPersons[1] = person
 	(
 		(const char*)"1960810460023",
-		NULL,
+		someSecrets,
 		(const char*)"Cosmin",
 		(const char*)"Aruxandei",
 		(const char*)"Andrei",

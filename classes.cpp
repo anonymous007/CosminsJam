@@ -118,6 +118,11 @@ protected:
 	std::vector<std::string> hobbies;
 	//may or may not have 'em, if not, sorry for ya.
 public:
+
+	std::vector<char> firstName;
+	std::vector<char> lastName;
+	std::vector<char> middleName;
+
 	char sex;
 	/*
 	m = masculine
@@ -131,10 +136,6 @@ public:
 	// in metric, not imperial, please. We like precision in Europe.
 	// we also don't like to use sentences like "My arm is one foot long.", or
 	// "I once ate a 2 foot pizza in diameter"
-
-	std::vector<char> firstName;
-	std::vector<char> lastName;
-	std::vector<char> middleName;
 
 	virtual void favoriteActivity()
 	{
@@ -162,7 +163,7 @@ public:
 			const char* lastName,
 			const char* middleName,
 			unsigned short age
-		  );                   
+		  );//overloading the constructor function                   
 	person()
 	{
 		life = t;
@@ -204,14 +205,31 @@ std::vector<char> person::getCNP()
 	return this->CNP;
 }
 
-person::person(const char* _cnp, 
-	const char* secrets[], 
-	const char* firstName, 
-	const char* lastName, 
-	const char* middleName, 
-	unsigned short age) {
+person::person(
+	const char* _cnp, 
+	const char* _secrets[], 
+	const char* _firstName, 
+	const char* _lastName, 
+	const char* _middleName, 
+	unsigned short _age) {
+
 	for (unsigned int i = 0; _cnp[i] != '\0'; ++i)
-		this->CNP.push_back(_cnp[i]);
+		CNP.push_back(_cnp[i]);
+
+	for (unsigned int i = 0; _firstName[i] != '\0'; ++i)
+		firstName.push_back(_firstName[i]);
+
+	for (unsigned int i = 0; _lastName[i] != '\0'; ++i)
+		lastName.push_back(_lastName[i]);
+
+	for (unsigned int i = 0; _middleName[i] != '\0'; ++i)
+		middleName.push_back(_middleName[i]);
+
+	age = _age;
+	if(_secrets)
+	for (unsigned int i = 0; _secrets[i] != NULL; ++i)
+		secrets.push_back(_secrets[i]);
+
 }
 class kid :person {
 	//kids are persons too. LOL.I know often the case my seem different but...
@@ -292,11 +310,18 @@ int main()
 
 
 	printf("Declare a group of Persons (13)members\n");
-	std::vector<person> groupOfPersons(13);
-	for (unsigned int i = 0; i < 13; ++i)
-	{
-		groupOfPersons[i] = person();
-	}
+	std::vector<person> groupOfPersons(3);
+	groupOfPersons[0] = person();//declared a person with default values
+
+	groupOfPersons[1] = person
+	(
+		(const char*)"1960810460023",
+		NULL,
+		(const char*)"Cosmin",
+		(const char*)"Aruxandei",
+		(const char*)"Andrei",
+		(unsigned int)22
+	);// declared a person with overloaded constructor function
 
 
 

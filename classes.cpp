@@ -17,22 +17,54 @@ classes exercise with some STL container data usage
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 #define f 0
 #define t !f
 //because too lazy to type "true, or false"
 
+
+const char* serialRegions[]{
+    "IF",
+    "OT",
+    "NT",
+    "BC",
+    "BT",
+    (const char*)NULL
+};
+
+const char* serialNumbers[]{
+    "562701",
+    "155423",
+    "562701",
+    "132435",
+    "654734",
+    (const char*)NULL
+};
+//will be choosing randomly combinations of these when we create serialCodes
+
+
 class serialCode{
     public: char regionInitials[2];
             std::string number;
 
+    std::string getNumber(serialCode *x)
+    {
+        return x->number;
+    }
+    char* getRegionInitials(serialCode *x)
+    {
+        return x->regionInitials;
+    }
     serialCode ()
     {
-        
-    }
-    serialCode (char regInit[], std::string num){
-        memcpy(this->regionInitials, regInit, 3);
-        this->number=num;
+        srand(time(NULL));
+        unsigned int random=rand()%5;//since we have only 5 items in serialNumbers & serialRegions arrays, it will generate a random number from 0 to 4. Perfect!
+
+        memcpy(regionInitials, serialRegions[random],3);
+        memcpy(&number[0], serialNumbers[random], strlen(serialNumbers[random]));
+        //copy functions, straight outta Compton. I meant C. 
+
     }
     ~serialCode (){
         memset(this->regionInitials, '\0', 3);
@@ -41,7 +73,7 @@ class serialCode{
 };
 
 void doNothing(){} 
-//void doNothing(){ do{ }while(f); }//this one also works just fine
+//void doNothing(){ do{ }while(f); }//this one also works just fine, and it's more explicit
 
 
 void relaxing()
@@ -114,9 +146,20 @@ class person{
 
         void setLife(bool x);
 
+        void setSecrets(std::vector<std::string>);
+
         void clonePerson(person, person);
-        
+
+
         std::vector<char> getCNP();
+
+        person( std::vector<char> CNP,                  \
+                serialCode series,                      \
+                std::vector<std::string>secret,         \
+                std::vector<char> firstName,            \
+                std::vector<char> lastName,             \
+                std::vector<char> middleName,           \
+                unsigned short age);                    \
         person()
         {
             life=t;
@@ -135,6 +178,10 @@ void person::setLife(bool x)
     this->life=x;
 }
 
+void person::setSecrets(std::vector<std::string> x)
+{
+    this->secrets=x;
+}
 
 void person::clonePerson(person a, person b)
 {
@@ -222,9 +269,17 @@ class adult:person{//adults are persons, so... inheritance!
 
 int main()
 {
+
     std::vector<person> personArray;
     std::vector<kid> kidsArray;
     std::vector<adult> adultArray;
+
+    std::vector<serialCode>serialArray;
+    for(unsigned int i=0;i<10;++i)
+    {
+        serialCode *x=new serialCode;
+        serialArray[i].push_back(*x);
+    }
     
     return 0;
 }

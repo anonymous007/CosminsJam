@@ -4,15 +4,16 @@ using namespace std;
 
 int bSearch(int a[], int start, int stop, int k)
 {
-    int mid=(stop-start)/2;//we determine the middle value of the vector
-    if(start>0)
-        return -1;//returned when we didn't find the element
-    if(k==a[mid])
-        return mid;//returned when we found the element k in array a
-    else if(k>a[mid])//if the value k is greater than our mid value, we look in the second half, again.
-        return bSearch(a, mid, stop, k);
-    else//otherwise, we look in the first half, again.
-        return bSearch(a, start, mid,k);
+        if(stop>=start)
+        {
+            int mid=start+(stop-start)/2;   //calculate the mid of the segment between start - stop
+            if(k==a[mid])
+                return mid; //we found the element we're searching for
+            if(k>a[mid])//k is greater than our mid element, so we search in the right subsegment of the vector
+                return bSearch(a,mid+1,stop,k);
+            return bSearch(a,start,mid-1,k);//k is lower than our mid element, so we search in the left subsegment of the vector
+        }
+        return -1;
 }
 
 
@@ -26,6 +27,8 @@ int main()
 
 
     k=905;
+    cout<<'\n'<<bSearch(x,0,sizeof(x)/sizeof(int),k);
+    k=9100;
     cout<<'\n'<<bSearch(x,0,sizeof(x)/sizeof(int),k);
 
     return 0;

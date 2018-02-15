@@ -29,7 +29,7 @@ int main()
     k=905;
     cout<<'\n'<<bSearch(x,0,sizeof(x)/sizeof(int),k);
     k=9100;
-    cout<<'\n'<<bSearch(x,0,sizeof(x)/sizeof(int),k);
+    cout<<'\n'<<bSearch(x,0,sizeof(x)/sizeof(int),k)<<'\n';
 
     return 0;
 }
